@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Changing DOM by click</title>
+</head>
+<body>
+<p style="font-size:24px">
+
+
+	<a href="#"
+	onclick ="document.getElementById('Stuff').innerHTML = 'Back'; return false;">Back</a>
+	<a href="#"
+	onclick = "document.getElementById('Stuff').innerHTML = 'Forth'; return false;"> Forth</a>
+	<a href="#" style="color: black" 
+	onclick ="document.getElementById('Stuff').innerHTML = 'Stuff'; return false;">original page</a>	
+</p>
+
+<p style="color: red; font-size:24px; ">
+	Hello <b><span id='Stuff' style="color: green">  Stuff  </span></b> There.
+</p>
+</body>
+</html>

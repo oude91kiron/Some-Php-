@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Changing DOM</title>
+</head>
+<body>
+<p> Hello <b><span id="person">Udai</span></b> there.</p>
+<script type="text/javascript">
+	st = document.getElementById('person').innerHTML;  
+	window.console && console.log("ST = "+ st);	// print variable value in console window
+	alert('Hi man how are you?');
+
+	document.getElementById('person').innerHTML = 'Moutaz'; // change the DOM
+	window.console && console.dir(document.getElementById('person')); // printing tag info by id (span#person)
+</script>
+</body>
+</html>

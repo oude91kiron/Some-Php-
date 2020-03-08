@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Test JavaScript function</title>
+</head>
+<body>
+<p>
+	<a href="#" onclick="add() ; return false;">More</a>
+</p>
+<ul id = "the-list">
+	<li>First List</li>
+</ul>
+
+<script type="text/javascript">
+	counter = 1;
+	console.log(document.getElementById('the-list'))
+
+	function add() {
+		var x = document.createElement('li');
+		x.className = "list-item";
+		x.innerHTML = "The counter is "+ counter;
+		document.getElementById('the-list').appendChild(x);
+		counter++;
+	}
+</script>
+</body>
+</html>
