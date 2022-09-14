@@ -1,0 +1,12 @@
+/vendor
+/bootstrap
+/node_modules
+composer.phar
+composer.lock
+.DS_Store
+Thumbs.db
+.env
+/phpunit.xml
+/.idea
+/.vscode
+.phpunit.result.cache

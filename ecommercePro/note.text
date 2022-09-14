@@ -1,0 +1,14 @@
+1.create an authintication by using Jetstream & Livewire
+
+"
+-Laravel Jetstream is a beautifully designed application starter
+ kit for Laravel and provides the perfect starting 
+ point for your next Laravel application.
+
+-Livewire is a full-stack framework for Laravel that makes
+ building dynamic interfaces simple, without leaving
+ the comfort of Laravel."
+
+ 2. Edit registration in the view folder and modify user modul.
+
+ 3.
