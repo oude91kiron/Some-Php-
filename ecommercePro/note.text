@@ -1,4 +1,4 @@
-1.create an authintication by using Jetstream & Livewire
+1.Using Jetstream & Livewire
 
 "
 -Laravel Jetstream is a beautifully designed application starter
@@ -11,4 +11,6 @@
 
  2. Edit registration in the view folder and modify user modul.
 
- 3.
+ 3. Using Strip API to handel cart payment.
+
+ 4. Send verificatin email.
