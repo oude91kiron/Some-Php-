@@ -38,6 +38,7 @@
         td {
             padding: 2px;
         }
+
     </style>
   </head>
   <body>
@@ -46,8 +47,21 @@
         @include('admin.header')
 
         
+
+        
         <div class="content-wrapper">
             <h1 class="title_deg">All Orders</h1>
+
+            <form action="{{url('search')}}" method="get">
+                @csrf
+                <div style="padding:20px 20px 20px 40%;">
+                    <input type="text" name="search" style="color:black" placeholder="Search form Somthing..">
+
+                    <input type="submit" value="search" class="btn btn-primary">
+                </div>
+            </form>
+
+
 
             <table class="table_deg">
                 <tr class="thead">
@@ -63,9 +77,10 @@
                     <th>Image</th>
                     <th>Delivered</th>
                     <th>Print PDF</th>
+                    <th>Send Email</th>
                 </tr>
                 
-                @foreach($orders as $order)
+                @forelse($orders as $order)
                 <tr>
                     <td>{{$order->name}}</td>
                     <td>{{$order->email}}</td>
@@ -95,9 +110,19 @@
                         <a href="{{url('print_pdf', $order->id)}}" class="btn btn-secondary">Print PDF</a>
 
                     </td>
+                    <td>
+                        <a href="{{url('send_email', $order->id)}}" class="btn btn-info">Send Email</a>
+                    </td>
 
                 </tr>
-                @endforeach
+
+                @empty
+                <tr>
+                    <td colspan="16">
+                        No Data Found
+                    </td>
+                </tr>
+                @endforelse
             </table>
         </div>
     </div>    

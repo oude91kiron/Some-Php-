@@ -32,8 +32,8 @@ Route::middleware([
     })->name('dashboard');
 });
 
-// Route the user to home.panel
-Route::get('/redirect', [HomeController::class, 'redirect']);
+// Route the user to home.panel if the maddleware verified.
+Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth', 'verified');
 
 // Route the admin the category
 Route::get('/view_category', [AdminController::class, 'view_category']);
@@ -90,8 +90,11 @@ Route::get('delivered/{id}', [AdminController::class, 'delivered']);
 
 Route::get('print_pdf/{id}', [AdminController::class, 'print_pdf']);
 
+Route::get('send_email/{id}', [AdminController::class, 'send_email']);
 
+Route::post('send_user_email/{id}', [AdminController::class, 'send_user_email']);
 
+Route::get('/search', [AdminController::class, 'searchData']);
 
 
 

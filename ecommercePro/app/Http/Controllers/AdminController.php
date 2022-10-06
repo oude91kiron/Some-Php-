@@ -15,6 +15,10 @@ use App\Models\order;
 /** check the package */
 use PDF;
 
+use Notification;
+
+use App\Notifications\SendEmailNotification;
+
 class AdminController extends Controller
 
 {
@@ -233,6 +237,51 @@ class AdminController extends Controller
         return $pdf->download('order_details.pdf');
 
     }
+
+    /**
+     * Method to send email
+     * 
+     */
+    public function send_email($id) {
+
+        $order = Order::find($id);
+
+        return view('admin.email_info', compact('order'));
+    }
+
+    public function send_user_email(Request $request, $id) {
+
+        $orderId = Order::find($id);
+
+        $details = [
+
+            'greeting' => $request->greeting,
+            'firstline' =>$request->firstline,
+            'body' => $request->body,
+            'button' => $request->button,
+            'url' => $request->url,
+            'lastline' => $request->lastline
+
+        ]; 
+
+        Notification::send($orderId, new SendEmailNotification($details));
+
+        return view('admin.home');
+
+    }
+
+
+    public function searchData(Request $request) {
+
+        $searchKey = $request->search;
+
+        $orders = Order::where('name', 'LIKE', "%$searchKey%")->orWhere('phone', 'LIKE', "%$searchKey%")->orWhere('product_title', 'LIKE', "%$searchKey%")->get();
+
+        // dd($orders);
+        return view('admin.order', compact('orders'));
+    }
+
+
 }
 
 
