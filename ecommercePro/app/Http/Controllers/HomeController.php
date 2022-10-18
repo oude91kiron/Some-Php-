@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Card;
 use App\Models\Order;
+use App\Models\Category;
 use Session;
 use Stripe;
 
@@ -23,7 +24,25 @@ class HomeController extends Controller
 
         if ($userType == 1) {
 
-            return view('admin.home');
+            $products = Product::all()->count();
+            $ordersNum = Order::all()->count();
+            $users = User::all()->count();
+
+            $orders = Order::all();
+
+            $total_revenue = 0;
+
+            foreach($orders as $order) {
+
+                $total_revenue = $total_revenue + $order->price;
+            }
+
+            $dilevered = Order::where('delivery_status', '=', 'delivered')->get()->count();
+            $processing = Order::where('delivery_status', '=', 'processing')->get()->count();
+
+            $category = Category::all()->count();
+
+            return view('admin.home', compact('products', 'ordersNum', 'users', 'total_revenue', 'dilevered', 'processing', 'category'));
         } else {
             $product=Product::paginate(10);
 

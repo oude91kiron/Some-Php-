@@ -13,7 +13,7 @@
                 </div>
                 <div class="profile-name">
                   <h5 class="mb-0 font-weight-normal">Ömer Furkanoğlu</h5>
-                  <span>Gold Member</span>
+                  <span>Golden Man</span>
                 </div>
               </div>
               <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -57,7 +57,7 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{{url('admin/index.html')}}">
+            <a class="nav-link" href="{{url('/redirect')}}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
