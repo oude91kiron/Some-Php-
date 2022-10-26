@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->id();
+            $table->id()-nulable();
             $table->string('name')->nulable();
             $table->string('email')->nulable();
             $table->string('phone')->nulable();

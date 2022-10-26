@@ -8,8 +8,10 @@ use App\Models\Product;
 use App\Models\Card;
 use App\Models\Order;
 use App\Models\Category;
+use App\Models\comment;
 use Session;
 use Stripe;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {
@@ -20,16 +22,16 @@ class HomeController extends Controller
      */
     public function redirect() {
 
-        $userType = Auth::user()->userType;
-
+        $user = Auth::user();
+        $userType = $user->userType;
+        $id = $user->id;
+        // Admin view
         if ($userType == 1) {
 
             $products = Product::all()->count();
             $ordersNum = Order::all()->count();
             $users = User::all()->count();
-
             $orders = Order::all();
-
             $total_revenue = 0;
 
             foreach($orders as $order) {
@@ -39,14 +41,21 @@ class HomeController extends Controller
 
             $dilevered = Order::where('delivery_status', '=', 'delivered')->get()->count();
             $processing = Order::where('delivery_status', '=', 'processing')->get()->count();
+            $comments =Comment::where('user_id', '=', $id)->get();
 
             $category = Category::all()->count();
 
             return view('admin.home', compact('products', 'ordersNum', 'users', 'total_revenue', 'dilevered', 'processing', 'category'));
-        } else {
+        } 
+        
+        // User view.
+        else 
+        {
             $product=Product::paginate(10);
-
-            return view('home.userpage', compact('product'));
+            
+            $comments =Comment::where('user_id', '=', $id)->get();
+            //dd($comments);
+            return view('home.userpage', compact('product', 'comments'));
         }
     }
 
@@ -57,12 +66,16 @@ class HomeController extends Controller
      */
      public function index() {
 
+        $id = 0;
         $product=Product::paginate(10);
+        $comments =Comment::where('user_id', '=', $id)->get();
 
-        return view('home.userpage', compact('product'));
+        return view('home.userpage', compact('product', 'comments'));
     }
     /**
      * Method to view single page for a product.
+     * 
+     * @param integer $id
      */
     public function product_ditail ($id) {
 
@@ -74,7 +87,7 @@ class HomeController extends Controller
     /**
      * Method to add a product to the card.
      * 
-     * @param Request @request
+     * @param Request $request
      * @param integer $id
      * @return void
      */
@@ -125,32 +138,24 @@ class HomeController extends Controller
      * Method to show product in card page.
      */
     public function show_card() {
-
-
         // If user loged in.
-        if(Auth::id()){
+        if(Auth::id())
+        {
+            // get user id.
+            $id = Auth::user()->id;
+            // Get collection of objects for the user that loged in.
+            $card = card::where('user_id', '=', $id)->get();
 
-        // get user id.
-        $id = Auth::user()->id;
-        
-        // Get card object for the user that loged in.
-        $card = card::where('user_id', '=', $id)->get();
-        
-        
-        if($card->isNotEmpty()) {
+            //dd($card);
 
-        // send object data to view using compact helper method.
-        return view('home.show_card', compact('card'));
-                
+            // send objects to the view.
+            return view('home.show_card', compact('card'));         
         }
-        else {
-            return view('home.emptycart');
-        }
-        }
-        else{
-
+        else
+        {
             return redirect('login');
         }
+    
     }
 
     /**
@@ -167,8 +172,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Add data to the Order object
-     * and delete it from card object
+     * Move data from cart into order.
      * 
      * @param integer $id
      * @return void
@@ -216,9 +220,7 @@ class HomeController extends Controller
              $card->delete(); 
 
         }
-
-    return redirect('/')->back()->with('message', 'Thanks, we recived your order.');
-
+        return redirect()->back()->with('status', 'We Get Your Order Thnaks to be one of our family');
     }
  
     /**
@@ -237,8 +239,7 @@ class HomeController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function stripePost(Request $request)
-    {
+    public function stripePost(Request $request){
         /**
          * Read Stripe docs for more.
          */
@@ -300,6 +301,59 @@ class HomeController extends Controller
         Session::flash('success', 'Payment successful!');
               
         return back();
+    }
+
+    /**
+     * 
+     */
+    public function show_order() {
+
+        $userId = Auth::user()->id;
+
+        $items = Order::where('user_id', '=', $userId)->get();
+
+
+        return view('home.show_order', compact('items'));
+    }
+
+
+    /**
+         * Method to delete a product
+         * 
+         * @param integer $id
+         * @return action
+         */
+    public function delete_item($id) {
+
+            $item = Order::find($id);    
+               
+            $item->delete();
+
+            return redirect()->back()->with('success', 'Product has been deleted successfuly');
+        
+    }
+
+    /**
+         * Method enable user to add a comment.
+         * 
+         * @param Request $request
+         * @return void 
+         */
+    public function add_comment(Request $request) {
+
+            if(Auth::id()) {
+
+                $comment = new Comment();
+                
+                $comment->name = Auth::user()->name;
+                $comment->comment =  $request->comment;
+                // dd($request->comment);
+                $comment->user_id = Auth::user()->id;
+ 
+                $comment->save();
+            }
+
+            return back();
     }
 
 }

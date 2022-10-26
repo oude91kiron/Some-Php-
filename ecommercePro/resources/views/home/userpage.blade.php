@@ -47,6 +47,9 @@
         @include('home.products')
       <!-- end product section -->
 
+      <!-- comments -->
+      @include('home.comment')
+
       <!-- subscribe section -->
         @include('home.subscribe')
       <!-- end subscribe section -->
@@ -59,12 +62,15 @@
         @include('home.footer')
       <!-- footer end -->
       <div class="cpy_">
-         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
+         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://Mashmediaco.com/">Mash Media</a><br>
          
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+            Distributed By <a href="https://Mashmediaco.com/" target="_blank">Mash Media</a>
          
          </p>
       </div>
+
+
+
       <!-- jQery -->
       <script src="home/js/jquery-3.4.1.min.js"></script>
       <!-- popper js -->

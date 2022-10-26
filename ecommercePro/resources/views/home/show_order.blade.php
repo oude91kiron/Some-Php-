@@ -25,15 +25,13 @@
         .center {
             width:75%;
             text-align:center;
-            padding:30px;
+            padding:50px 25px;
             margin: auto;
 
         }
 
         table, th, td {
-
-            border: 1px solid grey;
-             
+            border: 1px solid grey;  
         }
 
         .th_deg {
@@ -42,14 +40,12 @@
             background: skyblue;
         }
 
-        .img_deg {
-          
+        .img_deg { 
           width:75px; 
           hieght:75px;
         }
 
         .tprice {
-
           font-size: 25px;
           font-weight: bold;
           margin-top: 25px;
@@ -71,13 +67,6 @@
     </head>
    <body>
 
-   @if (session('status'))
-    <div class="alert alert-success">
-        {{ session('status') }}
-    </div>
-  @endif
-    <div class="hero_area">
-
          <!-- header section strats -->
         @include('home.header')
     <div class="center">
@@ -91,40 +80,26 @@
             <th class="th_deg">Action</th>
         </tr>
 
-        <?php $totalproduct = 0; ?>
-        <?php $totalPrice = 0; ?>
-
-        @foreach($card as $card)
+        @foreach($items as $item)
+         
         <tr>
-            <td>{{$card->product_title}}</td>
-            <td>{{$card->product_quantity}}</td>
-            <td>{{$card->price}}</td>
-            <td><img class="img_deg" src="{{url('/product', $card->image)}}" alt=""></td>
+            <td>{{$item->product_title}}</td>
+            <td>{{$item->quantity}}</td>
+            <td>{{$item->price}}</td>
+            <td>
+                <img hieght="100px" width="150px" src="product/{{$item->image}}" alt="">
+            </td>
             <td>
               <a 
-                href="{{url('/remove_card', $card->id)}}" 
+                href="{{url('delete_item', $item->id)}}" 
                 class="btn btn-danger"
                 onclick=" return confirm('Are you sure you wnat to delete product? ')"
               >Delete
               </a>
             </td>
         </tr>
-        <div>
-          <?php $totalproduct++ ?>
-          <?php $totalPrice = $totalPrice + $card->price * $card->product_quantity ?>
-        </div>
-        @endforeach 
+        @endforeach
       </table>
-
-      <div class="tprice">
-        <h3><?php echo 'Total Price: '. $totalPrice ?></h3>
-      </div>
-
-      <div class="payment">
-        <p>Complete Your Order</p>
-        <a href="{{url('cash_order', $totalproduct)}}" class="btn btn-danger">Cash on Delivery</a>
-        <a href="{{url('stripe', $totalPrice)}}" class="btn btn-danger">Pay Using Card</a>
-      </div>
     </div>
 
       <!-- jQery -->

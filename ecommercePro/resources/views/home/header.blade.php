@@ -1,3 +1,10 @@
+   @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+	        <button type="button" class="close" data-dismiss="alert">×</button>	
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+
 <header class="header_section">
             <div class="container">
                <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -39,9 +46,18 @@
                            </a>
                         </li>
 
+
                         @if (Route::has('login'))
                         
                         @auth
+
+                        
+                        <li class="nav-item">
+                           <a class="nav-link" href="{{url('/show_order')}}">
+                              <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                           </a>
+                        </li>
+
                         <li class="nav-item">
                            <x-app-layout>
                            

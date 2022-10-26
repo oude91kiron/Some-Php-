@@ -77,6 +77,7 @@ Route::get('/show_card', [HomeController::class, 'show_card']);
 //Route to remove item from card.
 Route::get('/remove_card/{id}', [HomeController::class, 'remove_card']);
 
+// Cash on delivery
 Route::get('/cash_order/{id}', [HomeController::class, 'cash_order']);
 
 //Routes To Use Stripe Payment methods in the controller.
@@ -96,7 +97,11 @@ Route::post('send_user_email/{id}', [AdminController::class, 'send_user_email'])
 
 Route::get('/search', [AdminController::class, 'searchData']);
 
+Route::get('/show_order', [HomeController::class, 'show_order']);
 
+Route::get('delete_item/{id}',[HomeController::Class, 'delete_item']);
+
+Route::post('/add_comment', [HomeController::class, 'add_comment']);
 
 
 

@@ -42,6 +42,7 @@
     </style>
   </head>
   <body>
+    
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
         @include('admin.sidebar')
